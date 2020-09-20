@@ -65,8 +65,8 @@ var overlayMaps = {
 
 // Create a map object
 var myMap = L.map("map", {
-    center: [34, -96],
-    zoom: 5,
+    center: [22, -63],
+    zoom: 3.5,
     layers: [satellite, earthquakes, tectonicplates]
 });
 
@@ -128,13 +128,13 @@ d3.json(earthquakeURL, function (data) {
 });
 
 // URL to raw json file of data on tectionic plates from `https://github.com/fraxen/tectonicplates`
-var tectonicURL = "https://raw.githubusercontent.com/fraxen/tectonicplates/master/GeoJSON/PB2002_plates.json"
+var tectonicURL = "https://raw.githubusercontent.com/fraxen/tectonicplates/master/GeoJSON/PB2002_boundaries.json"
 
 // Grab the data with d3
 d3.json(tectonicURL, function(data) {
     var plates = L.geoJson(data, {
         color: "#fdc500",
-        weight: 3
+        weight: 2
     });
     plates.addTo(tectonicplates);
 });
