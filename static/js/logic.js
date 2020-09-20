@@ -51,19 +51,20 @@ var overlayMaps = {
     "Earthquakes": earthquakes
 };
 
-// Creating map object
+// Create a map object
 var myMap = L.map("map", {
     center: [34, -96],
     zoom: 5,
     layers: [graymap, earthquakes]
 });
 
-// Pass our map layers into our layer control
+// Pass map layers into our layer control
 // Add the layer control to the map
 L.control.layers(baseMaps, overlayMaps, {
     collapsed: false
 }).addTo(myMap);
 
+// URL to earthquake data from USGS
 var url = "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_week.geojson"
 
 // Grab the data with d3
@@ -112,21 +113,23 @@ d3.json(url, function (data) {
     }
 });
 
+// Create a custom legend control
 var legend = L.control({position: 'bottomright'});
 
 legend.onAdd = function () {
 
     var div = L.DomUtil.create('div', 'info legend'),
-        grades = [0, 1,2,3,4,5];
+        magnitude = [0, 1, 2, 3, 4, 5];
 
     // loop through our density intervals and generate a label with a colored square for each interval
-    for (var i = 0; i < grades.length; i++) {
+    for (var i = 0; i < magnitude.length; i++) {
         div.innerHTML +=
-            '<i style="background:' + chooseColor(grades[i] + 1) + '"></i> ' +
-            grades[i] + (grades[i + 1] ? '&ndash;' + grades[i + 1] + '<br>' : '+');
+            '<i style="background:' + chooseColor(magnitude[i] + 1) + '"></i> ' +
+            magnitude[i] + (magnitude[i + 1] ? '&ndash;' + magnitude[i + 1] + '<br>' : '+');
     }
 
     return div;
 };
 
+// Add legend to map
 legend.addTo(myMap);
