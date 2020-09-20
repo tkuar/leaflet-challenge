@@ -114,7 +114,7 @@ d3.json(url, function (data) {
 });
 
 // Create a custom legend control
-var legend = L.control({position: 'bottomright'});
+var legend = L.control({ position: 'bottomright' });
 
 legend.onAdd = function () {
 
