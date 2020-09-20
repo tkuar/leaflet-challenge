@@ -42,14 +42,15 @@ var earthquakes = L.layerGroup();
 // Create a baseMaps object
 var baseMaps = {
     "Grayscale": graymap
-  };
-  
-  // Create an overlay object
-  var overlayMaps = {
+};
+
+// Create an overlay object
+var overlayMaps = {
     "Earthquakes": earthquakes
-  };
-  // Creating map object
-var myMap = L.map("map",{
+};
+
+// Creating map object
+var myMap = L.map("map", {
     center: [34, -96],
     zoom: 5,
     layers: [graymap, earthquakes]
@@ -59,22 +60,41 @@ var myMap = L.map("map",{
 // Add the layer control to the map
 L.control.layers(baseMaps, overlayMaps, {
     collapsed: false
-  }).addTo(myMap);
-  
-var geoData = "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_month.geojson"
+}).addTo(myMap);
+
+var url = "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_week.geojson"
 
 // Grab the data with d3
-d3.json(geoData, function (data) {
+d3.json(url, function (data) {
     // Loop through data
     for (var i = 0; i < data.features.length; i++) {
         // Set features' properties to a variable
         var properties = data.features[i].properties;
-        
-        // Set mag from properties to its own variable
-        var mag = properties.mag;
-        
-        // Reformat the coordinates from features' geometry to [lat, lgn] and set to its own variable
-        var latlng = [data.features[i].geometry.coordinates[1], data.features[i].geometry.coordinates[0]];
+
+        // Check if it exists
+        if (properties.mag) {
+            // Set mag from properties a variable
+            var mag = properties.mag;
+        }
+
+        // Check if it exists
+        if (properties.place) {
+            var place = properties.place;
+        }
+
+        // Check if it exists
+        if (properties.time) {
+            var time = properties.time;
+        }
+
+        // Set coordinates from features' geometry to a variable
+        var coordinates = data.features[i].geometry.coordinates;
+
+        // Check if it exists
+        if (coordinates) {
+            // Reformat the coordinates from features' geometry to [lat, lgn] and set to its own variable
+            var latlng = [coordinates[1], coordinates[0]];
+        }
 
         // Create a circle markers for earthquakes
         var markers = L.circle(latlng, {
@@ -83,10 +103,9 @@ d3.json(geoData, function (data) {
             fillOpacity: 1,
             weight: 0.5,
             radius: mag * 30000
-        }).bindPopup(`<h4>Location: ${properties.place}<hr>Magnitude: ${mag}<br>When: ${Date(properties.time)}</h4>`).addTo(myMap);
-    
+        }).bindPopup(`<h4>Location: ${place}<hr>Magnitude: ${mag}<br>When: ${Date(time)}</h4>`).addTo(myMap);
+
         // Add marker to earthqakes overlayer
         markers.addTo(earthquakes);
     }
-
 });
