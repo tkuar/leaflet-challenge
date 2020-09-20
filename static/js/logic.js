@@ -77,10 +77,10 @@ L.control.layers(baseMaps, overlayMaps, {
 }).addTo(myMap);
 
 // URL to earthquake data from USGS
-var url = "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_week.geojson"
+var earthquakeURL = "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_week.geojson"
 
 // Grab the data with d3
-d3.json(url, function (data) {
+d3.json(earthquakeURL, function (data) {
     // Loop through data
     for (var i = 0; i < data.features.length; i++) {
         // Set features' properties to a variable
@@ -117,14 +117,27 @@ d3.json(url, function (data) {
             fillColor: chooseColor(mag),
             fillOpacity: 1,
             weight: 0.5,
-            radius: mag * 30000
+            radius: mag * 25000
         }).bindPopup(`<h4>Location: ${place}<hr>Magnitude: ${mag}<br>When: ${Date(time)}</h4>`).addTo(myMap);
 
         // Add marker to earthqakes overlayer
         markers.addTo(earthquakes);
     }
+    
+   
 });
 
+// URL to raw json file of data on tectionic plates from `https://github.com/fraxen/tectonicplates`
+var tectonicURL = "https://raw.githubusercontent.com/fraxen/tectonicplates/master/GeoJSON/PB2002_plates.json"
+
+// Grab the data with d3
+d3.json(tectonicURL, function(data) {
+    var plates = L.geoJson(data, {
+        color: "#fdc500",
+        weight: 3
+    });
+    plates.addTo(tectonicplates);
+});
 // Create a custom legend control
 var legend = L.control({ position: 'bottomright' });
 
