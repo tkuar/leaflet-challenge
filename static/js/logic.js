@@ -122,9 +122,7 @@ d3.json(earthquakeURL, function (data) {
 
         // Add marker to earthqakes overlayer
         markers.addTo(earthquakes);
-    }
-    
-   
+    }     
 });
 
 // URL to raw json file of data on tectionic plates from `https://github.com/fraxen/tectonicplates`
@@ -132,12 +130,16 @@ var tectonicURL = "https://raw.githubusercontent.com/fraxen/tectonicplates/maste
 
 // Grab the data with d3
 d3.json(tectonicURL, function(data) {
-    var plates = L.geoJson(data, {
+     // Create a GeoJSON layer
+    var plates = L.geoJSON(data, {
         color: "#fdc500",
         weight: 2
     });
+
+    // Add plate layer to tectonicplates overlayer
     plates.addTo(tectonicplates);
 });
+
 // Create a custom legend control
 var legend = L.control({ position: 'bottomright' });
 
