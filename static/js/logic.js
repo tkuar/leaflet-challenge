@@ -21,7 +21,7 @@ function chooseColor(mag) {
 }
 
 // Create base layer
-// Grayscale Layer
+// Grayscale layer
 var graymap = L.tileLayer("https://api.mapbox.com/styles/v1/mapbox/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}", {
     attribution: "Map data &copy; <a href=\"https://www.openstreetmap.org/\">OpenStreetMap</a> contributors, <a href=\"https://creativecommons.org/licenses/by-sa/2.0/\">CC-BY-SA</a>, Imagery © <a href=\"https://www.mapbox.com/\">Mapbox</a>",
     tileSize: 512,
@@ -30,32 +30,44 @@ var graymap = L.tileLayer("https://api.mapbox.com/styles/v1/mapbox/{id}/tiles/{z
     id: "light-v9",
     accessToken: API_KEY
 });
-// // Adding tile layer
-// L.tileLayer("https://api.mapbox.com/styles/v1/mapbox/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}", {
-//   attribution: "Map data &copy; <a href=\"https://www.openstreetmap.org/\">OpenStreetMap</a> contributors, <a href=\"https://creativecommons.org/licenses/by-sa/2.0/\">CC-BY-SA</a>, Imagery © <a href=\"https://www.mapbox.com/\">Mapbox</a>",
-//   maxZoom: 18,
-//   id: "satellite-streets-v9",
-//   accessToken: API_KEY
-// }).addTo(myMap);
-
+// Satellite layer
+var satellite = L.tileLayer("https://api.mapbox.com/styles/v1/mapbox/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}", {
+  attribution: "Map data &copy; <a href=\"https://www.openstreetmap.org/\">OpenStreetMap</a> contributors, <a href=\"https://creativecommons.org/licenses/by-sa/2.0/\">CC-BY-SA</a>, Imagery © <a href=\"https://www.mapbox.com/\">Mapbox</a>",
+  maxZoom: 18,
+  id: "satellite-streets-v9",
+  accessToken: API_KEY
+});
+// Outdoors layer
+var outdoors = L.tileLayer("https://api.mapbox.com/styles/v1/mapbox/{id}/tiles/{z}/{x}/{y}?access_token={accessToken}", {
+  attribution: "Map data &copy; <a href=\"https://www.openstreetmap.org/\">OpenStreetMap</a> contributors, <a href=\"https://creativecommons.org/licenses/by-sa/2.0/\">CC-BY-SA</a>, Imagery © <a href=\"https://www.mapbox.com/\">Mapbox</a>",
+  maxZoom: 18,
+  id: "outdoors-v9",
+  accessToken: API_KEY
+});
 // Create a layer group for earthquakes
 var earthquakes = L.layerGroup();
 
+// Create a layer group for earthquakes
+var tectonicplates = L.layerGroup();
+
 // Create a baseMaps object
 var baseMaps = {
-    "Grayscale": graymap
+    "Satellite": satellite,
+    "Grayscale": graymap,
+    "Outdoors": outdoors
 };
 
 // Create an overlay object
 var overlayMaps = {
-    "Earthquakes": earthquakes
+    "Earthquakes": earthquakes,
+    "Fault Lines": tectonicplates
 };
 
 // Create a map object
 var myMap = L.map("map", {
     center: [34, -96],
     zoom: 5,
-    layers: [graymap, earthquakes]
+    layers: [satellite, earthquakes, tectonicplates]
 });
 
 // Pass map layers into our layer control
