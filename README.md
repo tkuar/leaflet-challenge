@@ -1,7 +1,7 @@
 # leaflet-challenge
 
 ## Leaflet-Step-1 Summary: Basic Visualization
-
+![basic](leaflet-step-1.gif)
 * This part of the homework utilizes both **HTML** and **Javascript**
 
 * The data set come from the [USGS GeoJSON Feed](http://earthquake.usgs.gov/earthquakes/feed/v1.0/geojson.php) page
@@ -16,7 +16,7 @@
    * There is a legend that provides context for the map data.
 
 ## Leaflet-Step-2 Summary:  More Data
-
+![advanced](leaflet-step-2.gif)
 * This part of the homework contains all of the same features as in **Leaflet-Step-1**.
 
 * The purpose of this part is to show the relationship between tectonic plates and seismic activity using data on tectonic plates from <https://github.com/fraxen/tectonicplates>
